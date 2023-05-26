@@ -6,6 +6,8 @@ import java.util.StringTokenizer;
 
 public class BOJ_17952 {
     private static int totalScore = 0;
+    private static Stack<Assignment> stack;
+
     static class Assignment {
         private int score;
         private int time;
@@ -15,6 +17,7 @@ public class BOJ_17952 {
             this.time = time;
         }
     }
+
     public static void main(String[] args) throws IOException {
         solve();
         output();
@@ -28,7 +31,7 @@ public class BOJ_17952 {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int minute = Integer.parseInt(br.readLine());
 
-        Stack<Assignment> stack = new Stack<>();
+        stack = new Stack<>();
         StringTokenizer st;
 
         for (int i = 0; i < minute; i++) {
@@ -40,8 +43,7 @@ public class BOJ_17952 {
                 if (stack.isEmpty()) continue;
 
                 Assignment current = stack.pop();
-                if (current.time - 1 == 0) totalScore += current.score;
-                else stack.push(new Assignment(current.score, current.time - 1));
+                checkTime(current);
             }
 
             // 과제가 있는 시간
@@ -49,12 +51,20 @@ public class BOJ_17952 {
                 int score = Integer.parseInt(st.nextToken());
                 int time = Integer.parseInt(st.nextToken());
 
-                if (time == 1) {
-                    totalScore += score;
-                } else {
-                    stack.push(new Assignment(score, time - 1));
-                }
+                checkTime(new Assignment(score, time));
             }
+        }
+    }
+
+    // 과제의 남은 소요시간 확인
+    private static void checkTime(Assignment assignment) {
+        int score = assignment.score;
+        int time = assignment.time;
+
+        if (time == 1) {
+            totalScore += score;
+        } else {
+            stack.push(new Assignment(score, time - 1));
         }
     }
 }
