@@ -3,7 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class BOJ_14500_1 {
+public class BOJ_14500 {
     private static int row, column, answer;
     private static int[][] board;
     private static int max = 0;
